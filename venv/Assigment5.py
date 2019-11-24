@@ -1,3 +1,4 @@
+import random as rand
 
 def addPositiveInts(num):
     sum = 0
@@ -87,14 +88,94 @@ def parallelIter():
         return [x for x in chain.from_iterable(zip_longest(l1, l2)) if x is not None]
 
 
-def main():
-    # Problem 1
-    print("Problem 1")
-    problem1()
+def problem4():
+    # 1 = on
+    # 0 = off
+    lightsOut = [[0]*5, [0]*5, [0]*5, [0]*5, [0]*5]
+    # randomizes the input
+    for row in lightsOut:
+        for pos in range(5):
+            row[pos] = rand.randrange(2)
 
-    # Problem 2
-    print("\nProblem 2")
-    problem2()
+    for row in lightsOut:
+        print(row)
+
+    def change(number):
+        if number == 1:
+            number = 0
+        else:
+            number = 1
+
+        return number
+
+    def click(row, pos):
+        lightsOut[row][pos] = change(lightsOut[row][pos])
+        if not row == 0:
+            lightsOut[row-1][pos] = change(lightsOut[row-1][pos])
+        if not row == 4:
+            lightsOut[row+1][pos] = change(lightsOut[row+1][pos])
+
+        if not pos == 0:
+            lightsOut[row][pos-1] = change(lightsOut[row][pos-1])
+
+        if not pos == 4:
+            lightsOut[row][pos+1] = change(lightsOut[row][pos+1])
+
+    def light_chase():
+        for row in range(4):
+            for pos in range(5):
+                if lightsOut[row][pos] == 1:
+                    click(row+1, pos)
+
+    def change_first_row():
+        if lightsOut[4] == [0,0,1,1,1]:
+            click(0,3)
+        elif lightsOut[4] == [0,1,0,1,0]:
+            click(0,1)
+            click(0,4)
+        elif lightsOut[4] == [0,1,1,0,1]:
+            click(0,0)
+        elif lightsOut[4] == [1,0,0,0,1]:
+            click(0,3)
+            click(0,4)
+        elif lightsOut[4] == [1,0,1,1,0]:
+            click(0,4)
+        elif lightsOut[4] == [1,1,0,1,1]:
+            click(0,2)
+        elif lightsOut[4] == [1,1,1,0,0]:
+            click(0,1)
+
+    change_first_row()
+    light_chase()
+    if not lightsOut[4] == [0,0,0,0,0]:
+        change_first_row()
+        light_chase()
+
+
+    if lightsOut[4] == [0,0,0,0,0]:
+        msg = "It has been solved:"
+    else:
+        msg = "No solution available:"
+    print("\n" + msg)
+    for row in lightsOut:
+        print(row)
+
+
+
+
+
+def main():
+    # # Problem 1
+    # print("Problem 1")
+    # problem1()
+    #
+    # # Problem 2
+    # print("\nProblem 2")
+    # problem2()
+
+    # Problem 4
+    print("\nProblem 4")
+    problem4()
 
 
 if __name__ == "__main__":
