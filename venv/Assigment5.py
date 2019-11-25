@@ -177,23 +177,25 @@ def problem4():
 
 
 def main():
-    # # Problem 1
-    # print("Problem 1")
-    # problem1()
-    #
-    # # Problem 2
-    # print("\nProblem 2")
-    # problem2()
+    # Problem 1
+    print("Problem 1")
+    problem1()
+
+    # Problem 2
+    print("\nProblem 2")
+    problem2()
 
     # Problem 3
     print("\nProblem 3:")
     print(parallelIter())
     print(all_iter())
 
-    # # Problem 4
-    # print("\nProblem 4")
-    # problem4()
+    # Problem 4
+    print("\nProblem 4")
+    problem4()
 
 
 if __name__ == "__main__":
     main()
+
+# Problem 4 solution method: http://www.logicgamesonline.com/lightsout/tutorial.html
