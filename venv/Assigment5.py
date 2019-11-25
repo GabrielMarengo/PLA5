@@ -1,4 +1,5 @@
 import random as rand
+import itertools
 
 def addPositiveInts(num):
     sum = 0
@@ -83,9 +84,20 @@ def problem2():
             break
 
 
-def parallelIter():
-    def twolists(l1, l2):
-        return [x for x in chain.from_iterable(zip_longest(l1, l2)) if x is not None]
+def parallelIter(l1 = [1,2], l2 = [3,4]):
+    return [x for x in itertools.chain(*itertools.zip_longest(l1, l2)) if x is not None]
+
+# TODO: Make
+def all_iter(l1 =[1,2], l2 = [3,4]):
+    pass
+    # l3 = itertools.chain(l1, l2)
+    # myList = [x for x in itertools.permutations(l3, 4) if x is not None]
+    # for x in list(myList):
+    #     if 0 in x:
+    #         print(x)
+    #         myList.remove(x)
+    # return myList
+
 
 
 def problem4():
@@ -173,9 +185,14 @@ def main():
     # print("\nProblem 2")
     # problem2()
 
-    # Problem 4
-    print("\nProblem 4")
-    problem4()
+    # Problem 3
+    print("\nProblem 3:")
+    print(parallelIter())
+    print(all_iter())
+
+    # # Problem 4
+    # print("\nProblem 4")
+    # problem4()
 
 
 if __name__ == "__main__":
