@@ -1,104 +1,65 @@
 import random as rand
 import itertools
 
-def addPositiveInts(num):
-    sum = 0
-    for i in range(num+1):
-        sum += i
-    return sum
+
+def problem1(num = 123456789):
+    def addPositiveInts(num=123456789):
+        return sum(range(num + 1))
+    print("Sum of {} is: {}".format(num, addPositiveInts(num)))
 
 
-def problem1():
-    errors = 0
-    while True:
-        try:
-            num1 = int(input("Enter a positive integer up to 123456789: "))
-        except ValueError:
-            if errors < 3:
-                errors += 1
-                print("The input provided was not an integer")
-                continue
-            else:
-                print("Incorrect input exceeds 3 times")
-                break
-
-        if (num1 < 0) or (num1 > 123456789):
-            if errors < 3:
-                errors += 1
-                print("The input provided is negative or greater than 123456789")
-                continue
-            else:
-                print("Incorrect input exceeds 3 times")
-                break
-
-        else:
-            print(str(addPositiveInts(num1)))
-            return
 
 
-def secondPrimeNum(a):
-    second = False
-    for i in range(a, 5001):
+def problem2(num = 1000):
+    def secondPrimeNum(a=1000):
+        second = False
+        for i in range(a, 5001):
 
-        # isPrime variable to tell if i is prime or not
-        isPrime = True
+            # isPrime variable to tell if i is prime or not
+            isPrime = True
 
-        for j in range(2, i // 2 + 1):
-            if (i % j == 0):
-                isPrime = False
-                break
+            for j in range(2, i // 2 + 1):
+                if (i % j == 0):
+                    isPrime = False
+                    break
 
-        if (isPrime):
-            if(second):
-                print(i, end=" ")
-                return
-            second = True
-
-    print("No second prime number can be found after {} that is smaller than 5000".format(a))
-
-def problem2():
-    errors = 0
-    while True:
-        try:
-            num2 = int(input("Enter a positive integer between 1000 and 5000: "))
-        except ValueError:
-            if errors < 3:
-                errors += 1
-                print("The input provided was not an integer")
-                continue
-            else:
-                print("Incorrect input exceeds 3 times")
-                break
-
-        if (num2 < 1000) or (num2 >= 5000):
-            if errors < 3:
-                errors += 1
-                print("The input provided is smaller than 1000 or greater or equal to 5000")
-                continue
-            else:
-                print("Incorrect input exceeds 3 times")
-                break
-
-        else:
-            secondPrimeNum(num2)
-            break
+            if (isPrime):
+                if (second):
+                    return i
+                second = True
+    print("The second prime number for {} is: {}".format(num, secondPrimeNum(num)))
 
 
-def parallelIter(l1 = [1,2], l2 = [3,4]):
-    return [x for x in itertools.chain(*itertools.zip_longest(l1, l2)) if x is not None]
 
-# TODO: Make
-def all_iter(l1 =[1,2], l2 = [3,4]):
-    pass
-    # l3 = itertools.chain(l1, l2)
-    # myList = [x for x in itertools.permutations(l3, 4) if x is not None]
-    # for x in list(myList):
-    #     if 0 in x:
-    #         print(x)
-    #         myList.remove(x)
-    # return myList
+def problem3(l1 = [1, 2], l2 = [3, 4]):
+    def parallel_iter(l1=[1, 2], l2=[3, 4]):
+        return [x for x in itertools.chain(*itertools.zip_longest(l1, l2)) if x is not None]
 
+    def all_iter(l1=[1, 2], l2=[3, 4]):
+        all_iter_list = []
 
+        def all_iter_recursive(l1, l2, lengthL1=len(l1), lengthL2=len(l2), iStr=[''] * (len(l1) + len(l2)), i=0):
+            # Base case: If all numbers of l1 and l2 have been included in the interleaved string,
+            # then adds it to the interleaved list
+            if lengthL1 == 0 and lengthL2 == 0:
+                all_iter_list.append(list(map(int, iStr)))
+
+            if lengthL1 != 0:
+                iStr[i] = l1[0]
+                all_iter_recursive(l1[1:], l2, lengthL1 - 1, lengthL2, iStr, i + 1)
+
+            if lengthL2 != 0:
+                iStr[i] = l2[0]
+                all_iter_recursive(l1, l2[1:], lengthL1, lengthL2 - 1, iStr, i + 1)
+
+        l1 = "".join(map(str, l1))
+        l2 = "".join(map(str, l2))
+        all_iter_recursive(l1, l2)
+        return all_iter_list
+
+    print(parallel_iter(l1,l2))
+    print("\nAll-iter:")
+    print(*all_iter(l1,l2), sep="\n")
 
 def problem4():
     # 1 = on
@@ -173,25 +134,21 @@ def problem4():
         print(row)
 
 
-
-
-
 def main():
     # Problem 1
-    print("Problem 1")
+    print("Problem 1:")
     problem1()
 
     # Problem 2
-    print("\nProblem 2")
+    print("\n\nProblem 2:")
     problem2()
 
     # Problem 3
-    print("\nProblem 3:")
-    print(parallelIter())
-    print(all_iter())
+    print("\n\nProblem 3:\nParallel-iter:")
+    problem3()
 
     # Problem 4
-    print("\nProblem 4")
+    print("\n\nProblem 4")
     problem4()
 
 
